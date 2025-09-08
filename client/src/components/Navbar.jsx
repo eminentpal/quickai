@@ -3,6 +3,7 @@ import { assets } from '../assets/assets'
 import { ArrowRight } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useClerk, UserButton, useUser } from '@clerk/clerk-react'
+import Hero from './Hero'
 
 const Navbar = () => {
 
@@ -26,6 +27,7 @@ const {openSignIn} = useClerk()
      }
      
         </div> 
+        
   )
 }
 
