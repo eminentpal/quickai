@@ -3,6 +3,8 @@ import Navbar from '../components/Navbar'
 import Hero from '../components/Hero'
 import AITools from '../components/AITools'
 import Testimonials from '../components/Testimonials'
+import Plan from '../components/Plan'
+import Footer from '../components/Footer'
 
 const Home = () => {
   return (
@@ -11,6 +13,8 @@ const Home = () => {
       <Hero />
       <AITools />
       <Testimonials />
+      <Plan />
+      <Footer />
     </>
   )
 }
