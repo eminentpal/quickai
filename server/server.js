@@ -4,6 +4,7 @@ import 'dotenv/config'
 import { clerkMiddleware, requireAuth } from '@clerk/express'
 import aiRouter from "./routes/aiRoutes.js";
 import connectCloudinary from "./config/cloudinary.js";
+import userRouter from "./routes/userRoutes.js";
 
 const app = express();
 
@@ -21,8 +22,11 @@ app.get("/", (req, res) => {
 
 app.use(requireAuth());
 
-//AI generate article route
+//AI generate article router
 app.use('/api/ai', aiRouter)
+
+//User router
+app.use('/api/user', userRouter)
 
 
 
