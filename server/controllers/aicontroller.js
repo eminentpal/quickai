@@ -15,7 +15,7 @@ const AI = new OpenAI({
 
 export const generateArticle = async (req, res) => {
   try {
-    console.log('testt');
+    
     const { userId } = req.auth();
     const { prompt, length } = req.body;
     const plan = req.plan;
@@ -29,8 +29,8 @@ export const generateArticle = async (req, res) => {
     }
 
     const response = await AI.chat.completions.create({
-      model: 'gemini-2.5-flash',
-      //reasoning_effort: 'low',
+      model: 'gemini-2.0-flash',
+      //reasoning_effort: 'high',
       messages: [
         {
           role: 'user',
@@ -41,7 +41,10 @@ export const generateArticle = async (req, res) => {
       max_tokens: length,
     });
 
+   
+
     const content = response.choices[0].message.content;
+
 
     await sql`INSERT INTO creations (user_id, prompt, content, type)
 VALUES(${userId}, ${prompt}, ${content}, 'article')`;
@@ -56,7 +59,7 @@ VALUES(${userId}, ${prompt}, ${content}, 'article')`;
 
     res.json({ success: true, content });
   } catch (error) {
-    console.log(error.message);
+    
     res.json({ success: false, message: error.message });
   }
 };
@@ -105,7 +108,7 @@ VALUES(${userId}, ${prompt}, ${content}, 'blog-title')`;
 
     res.json({ success: true, content });
   } catch (error) {
-    console.log(error.message);
+    
     res.json({ success: false, message: error.message });
   }
 };
@@ -122,8 +125,7 @@ export const generateImage = async (req, res) => {
     //const free_usage = req.free_usage
 
     //we removed the '&& free_usage >10' from the code to prevent free user plan from using the sever
-    console.log(plan);
-    console.log('test');
+   
     if (plan !== 'premium') {
       return res.json({
         success: false,

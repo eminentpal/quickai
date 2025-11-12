@@ -3,13 +3,13 @@
 import { clerkClient } from '@clerk/express';
 
 export const auth = async (req, res, next) => {
-  console.log('test');
+  console.log('test4');
 
   try {
     const { userId, has } = await req.auth();
     const hasPremiumPlan = await has({ plan: 'premium' });
 
-    console.log(hasPremiumPlan);
+    console.log({'plan':hasPremiumPlan});
     // console.log(userId)
 
     const user = await clerkClient.users.getUser(userId);
