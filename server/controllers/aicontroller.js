@@ -7,7 +7,9 @@ import fs from 'fs';
 //import pdf from 'pdf-parse/lib/pdf-parse.js';
 import {PDFParse} from 'pdf-parse';
 
-PDFParse
+
+
+//PDFParse
 const AI = new OpenAI({
   apiKey: process.env.GEMINI_API_KEY,
   baseURL: 'https://generativelanguage.googleapis.com/v1beta/openai/',
@@ -143,7 +145,7 @@ export const generateImage = async (req, res) => {
       {
         headers: { 'x-api-key': process.env.CLIPDROP_API_KEY },
         responseType: 'arraybuffer',
-        
+
       }
     );
 
@@ -169,8 +171,10 @@ VALUES(${userId}, ${prompt}, ${secure_url}, 'image',${publish ?? false})`;
 export const removeImageBackground = async (req, res) => {
   try {
     const { userId } = req.auth();
-    const { image } = req.file;
+    const image  = req.file;
     const plan = req.plan;
+
+    console.log('j')
 
     if (plan !== 'premium') {
       return res.json({
@@ -202,7 +206,7 @@ export const removeImageObject = async (req, res) => {
   try {
     const { userId } = req.auth();
     const { object } = req.body;
-    const { image } = req.file;
+    const  image  = req.file;
     const plan = req.plan;
 
     if (plan !== 'premium') {
@@ -250,12 +254,18 @@ export const resumeReview = async (req, res) => {
     }
 
     const databuffer = fs.readFileSync(resume.path);
-    const pdfData = await PDFParse(databuffer);
+
+    const parser = new PDFParse({ data: databuffer });
+
+    
+    const pdfData = await parser.getText()
+
+ 
 
     const prompt = `Review the following resume and provide constructive feedback on its strengths, weaknesses, and areas for improvement. Resume Content:\n\n${pdfData.text}`;
 
     const response = await AI.chat.completions.create({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-2.0-flash',
       messages: [
         {
           role: 'user',
