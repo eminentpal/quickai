@@ -81,7 +81,7 @@ export const generateBlogTitle = async (req, res) => {
     }
 
     const response = await AI.chat.completions.create({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-2.0-flash',
       //reasoning_effort: 'low',
       messages: [
         {
@@ -135,6 +135,7 @@ export const generateImage = async (req, res) => {
 
     const formData = new FormData();
     formData.append('prompt', prompt);
+ console.log(formData)
 
     const { data } = await axios.post(
       'https://clipdrop-api.co/text-to-image/v1',
@@ -142,9 +143,12 @@ export const generateImage = async (req, res) => {
       {
         headers: { 'x-api-key': process.env.CLIPDROP_API_KEY },
         responseType: 'arraybuffer',
+        
       }
     );
 
+     console.log('data')
+   
     const base64Image = `data:image/png;base64,${Buffer.from(
       data,
       'binary'
