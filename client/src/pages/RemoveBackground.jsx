@@ -20,8 +20,6 @@ const [loading, setLoading] = useState(false);
   
      try {
       setLoading(true)
-
-      console.log(axios)
     
       const formData = new FormData()
 

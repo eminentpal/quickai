@@ -15,17 +15,8 @@ import { useEffect } from 'react'
 import { Toaster } from "react-hot-toast";
 const App = () => {
 
-// const {getToken} = useAuth()
 
-// useEffect(() => {
-// getToken({ template: "default" }).then((token) =>console.log(token));
- 
-
-
-// }, [])
-
-
-  return (
+return (
     <div  >
       <Toaster />
    <Routes>
